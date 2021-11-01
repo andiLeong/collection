@@ -166,7 +166,7 @@ class Collection extends BaseCollection
 
     public function last()
     {
-        return end($this->items);
+        return array_pop($this->items);
     }
 
     public function all()
