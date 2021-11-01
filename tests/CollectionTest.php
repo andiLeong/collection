@@ -263,4 +263,11 @@ class CollectionTest extends testcase
         $this->assertEquals('two' , $collection[0]);
     }
 
+    /** @test */
+    public function it_can_push_a_item_to_the_end_of_collection()
+    {
+        $collection = $this->collection->push('hello','world');
+        $this->assertEquals( 6 , $collection->count());
+        $this->assertEquals( 'world' , $collection->last());
+    }
 }

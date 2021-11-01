@@ -169,6 +169,14 @@ class Collection extends BaseCollection
         return array_pop($this->items);
     }
 
+    public function push(...$values)
+    {
+        foreach ($values as $value) {
+            $this->items[] = $value;
+        }
+        return $this;
+    }
+
     public function all()
     {
         return $this->items;
