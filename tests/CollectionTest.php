@@ -197,9 +197,23 @@ class CollectionTest extends testcase
         $newCollection2 = Collection::make($arr)->only('name');
 
 
-        $this->assertEquals( 1, $newCollection['product_id']);
-        $this->assertEquals( 'Desk', $newCollection['name']);
-        $this->assertEquals( 'Desk', $newCollection2['name']);
+        $this->assertEquals( 2, $newCollection->count());
+        $this->assertEquals( 1, $newCollection2->count());
+    }
+
+    /** @test */
+    public function it_can_get_shared_array_from_collection()
+    {
+        $arr = [
+            'product_id' => 1,
+            'name' => 'Desk',
+            'price' => 100,
+            'discount' => false,
+        ];
+        $newCollection = Collection::make($arr)->shared(['product_id' => 1,'name' => 'Desk','price' => 1111,'random_key' => false]);
+
+
+        $this->assertEquals( 2, $newCollection->count());
     }
 
 

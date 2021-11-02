@@ -62,6 +62,11 @@ class Collection extends BaseCollection
         return new static(array_intersect_key($this->items,$keys));
     }
 
+    public function shared(array $item)
+    {
+        return new static(array_intersect_assoc($this->items,$item));
+    }
+
     public function random()
     {
         return array_rand(array_flip($this->items));
