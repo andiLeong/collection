@@ -62,9 +62,24 @@ class Collection extends BaseCollection
         return new static(array_intersect_key($this->items,$keys));
     }
 
+    /**
+     * return the shared key and value from the collection and passed array key and values
+     * @param array $item
+     * @return $this
+     */
     public function shared(array $item)
     {
         return new static(array_intersect_assoc($this->items,$item));
+    }
+
+    /**
+     * return the shared value from the collection and passed array values
+     * @param array $item
+     * @return $this
+     */
+    public function sharedValues(array $item)
+    {
+        return new static(array_intersect($this->items,$item));
     }
 
     public function random()

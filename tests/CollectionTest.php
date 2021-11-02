@@ -212,8 +212,22 @@ class CollectionTest extends testcase
         ];
         $newCollection = Collection::make($arr)->shared(['product_id' => 1,'name' => 'Desk','price' => 1111,'random_key' => false]);
 
-
         $this->assertEquals( 2, $newCollection->count());
+    }
+
+    /** @test */
+    public function it_can_get_shared_array_value_from_collection()
+    {
+        $arr = [
+            'product_id' => 1,
+            'name' => 'Desk',
+            'price' => 100,
+            'discount' => false,
+        ];
+        $newCollection = Collection::make($arr)->sharedValues(['product_id' => 1,'name' => 'Desk','price' => 1111,'random_key' => false]);
+
+        $this->assertEquals( 3, $newCollection->count());
+        $this->assertTrue( $newCollection->exist('discount'));
     }
 
 
