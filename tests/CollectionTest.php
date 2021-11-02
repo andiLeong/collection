@@ -2,6 +2,7 @@
 namespace tests;
 
 use Andileong\Collection\Collection;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends testcase
@@ -234,8 +235,19 @@ class CollectionTest extends testcase
     /** @test */
     public function it_can_get_random_items_from_collection()
     {
-        $res = in_array(  $this->collection->random() , $this->array) ;
+        $res = in_array( $this->collection->random() , $this->array);
+        $newCollection2 =  $this->collection->random(3);
+
+        $this->assertEquals( 4 , $this->collection->count());
         $this->assertTrue( $res);
+        $this->assertEquals( 3 , $newCollection2->count());
+    }
+
+    /** @test */
+    public function if_random_length_large_than_collection_count_exception_will_throw()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->collection->random(300);
     }
 
     /** @test */

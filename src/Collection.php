@@ -2,6 +2,8 @@
 namespace Andileong\Collection;
 
 
+use InvalidArgumentException;
+
 class Collection extends BaseCollection
 {
 
@@ -82,9 +84,21 @@ class Collection extends BaseCollection
         return new static(array_intersect($this->items,$item));
     }
 
-    public function random()
+    public function random(int $length = 1)
     {
-        return array_rand(array_flip($this->items));
+        if( $length == 1){
+            return $this->items[array_rand($this->items)];
+        }
+
+        $count = $this->count();
+        if ($length > $count) {
+            throw new InvalidArgumentException(
+                "You requested {$length} items, but there are only {$count} items available."
+            );
+        }
+
+        $keys = array_rand($this->items,$length);
+        return $this->only($keys)->values();
     }
 
     public function reverse()
