@@ -1,5 +1,5 @@
 <?php
-namespace tests;
+namespace Tests;
 
 use Andileong\Collection\Collection;
 use InvalidArgumentException;
@@ -203,36 +203,6 @@ class CollectionTest extends testcase
     }
 
     /** @test */
-    public function it_can_get_shared_array_from_collection()
-    {
-        $arr = [
-            'product_id' => 1,
-            'name' => 'Desk',
-            'price' => 100,
-            'discount' => false,
-        ];
-        $newCollection = Collection::make($arr)->shared(['product_id' => 1,'name' => 'Desk','price' => 1111,'random_key' => false]);
-
-        $this->assertEquals( 2, $newCollection->count());
-    }
-
-    /** @test */
-    public function it_can_get_shared_array_value_from_collection()
-    {
-        $arr = [
-            'product_id' => 1,
-            'name' => 'Desk',
-            'price' => 100,
-            'discount' => false,
-        ];
-        $newCollection = Collection::make($arr)->sharedValues(['product_id' => 1,'name' => 'Desk','price' => 1111,'random_key' => false]);
-
-        $this->assertEquals( 3, $newCollection->count());
-        $this->assertTrue( $newCollection->exist('discount'));
-    }
-
-
-    /** @test */
     public function it_can_get_random_items_from_collection()
     {
         $res = in_array( $this->collection->random() , $this->array);
@@ -309,5 +279,19 @@ class CollectionTest extends testcase
         $collection = $this->collection->push('hello','world');
         $this->assertEquals( 6 , $collection->count());
         $this->assertEquals( 'world' , $collection->last());
+    }
+
+    /** @test */
+    public function it_can_covert_collection_to_array()
+    {
+        $collection = $this->collection->toArray();
+        $this->assertIsArray($collection);
+    }
+
+    /** @test */
+    public function it_can_covert_collection_to_json()
+    {
+        $collection = $this->collection->toJson();
+        $this->assertJson($collection);
     }
 }

@@ -84,6 +84,16 @@ class Collection extends BaseCollection
         return new static(array_intersect($this->items,$item));
     }
 
+    public function diffValues(array $item)
+    {
+        return new static(array_diff($this->items,$item));
+    }
+
+    public function diff(array $item)
+    {
+        return new static(array_diff_assoc($this->items,$item));
+    }
+
     public function random(int $length = 1)
     {
         if( $length == 1){
@@ -219,6 +229,16 @@ class Collection extends BaseCollection
     public function count()
     {
         return count($this->items);
+    }
+
+    public function toArray()
+    {
+        return $this->items;
+    }
+
+    public function toJson()
+    {
+        return json_encode($this,JSON_UNESCAPED_UNICODE );
     }
 
 }

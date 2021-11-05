@@ -10,7 +10,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Andileong\\Collection\\": "src/"
+            "Andileong\\Collection\\": "src/",
+            "Tests\\": "tests/"
         }
     }
 }
