@@ -4,11 +4,11 @@ namespace tests;
 use Andileong\Collection\Collection;
 use PHPUnit\Framework\TestCase;
 
-class ExampleOneTest extends testcase
+class GetLatestThreeSubscribedUserTest extends testcase
 {
 
     /** @test */
-    public function collection_playground_example_one()
+    public function it_can_get_latest_three_subscribed_users()
     {
 
         $array = [

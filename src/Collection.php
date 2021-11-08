@@ -2,7 +2,9 @@
 namespace Andileong\Collection;
 
 
+use Closure;
 use InvalidArgumentException;
+use ReflectionFunction;
 
 class Collection extends BaseCollection
 {
@@ -22,7 +24,7 @@ class Collection extends BaseCollection
 
     public function map(callable $fn)
     {
-        return new static(array_map($fn,$this->items));
+        return new static(array_map($fn,$this->items, array_keys($this->items ) ));
     }
 
     public function filter(callable $fn , $mode = 0)
@@ -34,6 +36,27 @@ class Collection extends BaseCollection
     {
         return new static(array_unique($this->items, $flags ));
     }
+
+    public function keys()
+    {
+        return new static(array_keys($this->items ));
+    }
+
+    public function get(string $key , $default = null )
+    {
+        if($this->has($key)){
+            return $this->items[$key];
+        }
+
+        return $this->value($default);
+    }
+
+
+    public function value($value, ...$args)
+    {
+        return $value instanceof Closure ? $value(...$args) : $value;
+    }
+
 
     public function remove($key)
     {
@@ -219,6 +242,11 @@ class Collection extends BaseCollection
             $this->items[] = $value;
         }
         return $this;
+    }
+
+    public function reduce(callable $callable)
+    {
+        return array_reduce( $this->items, $callable);
     }
 
     public function all()
