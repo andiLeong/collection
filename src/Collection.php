@@ -60,10 +60,10 @@ class Collection extends BaseCollection
 
     public function remove($key)
     {
-        if( $this->exist($key) ) {
-            unset($this->items[$key]);
-            return new static($this->items);
+        if(!$this->exist($key) ) {
+            throw new InvalidArgumentException("Key {$key} isn't exist");
         }
+        unset($this->items[$key]);
         return new static($this->items);
     }
 
@@ -211,6 +211,14 @@ class Collection extends BaseCollection
         return isset($this->items[$key]) && !empty($this->items[$key]);
     }
 
+    public function contains(callable|string $value)
+    {
+        if(is_callable($value)){
+            return (boolean) $this->first($value);
+        }
+        return in_array( $value , array_values($this->all()) )  ;
+    }
+
     public function merge(Array $array)
     {
         return new static(array_merge($array,$this->items));
@@ -221,9 +229,22 @@ class Collection extends BaseCollection
         return new static(array_values($this->all()));
     }
 
-    public function first()
+    /**
+     * @param callable|null $callback
+     * @return mixed|null
+     */
+    public function first(callable $callback = null)
     {
-        return array_shift($this->items);
+        if(is_null($callback)){
+            return array_shift($this->items);
+        }
+
+        foreach ($this->items as $index => $value){
+            if ($callback($value, $index)) {
+                return $value;
+            }
+        }
+        return null;
     }
 
     public function second()

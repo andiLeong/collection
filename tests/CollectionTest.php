@@ -2,6 +2,7 @@
 namespace Tests;
 
 use Andileong\Collection\Collection;
+use InvalidArgumentException;
 
 class CollectionTest extends CollectionTestCase
 {
@@ -112,6 +113,13 @@ class CollectionTest extends CollectionTestCase
     }
 
     /** @test */
+    public function it_throw_exception_if_remove_a_collection_key_is_not_exist()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->associateCollection->remove('nameeeeeeee');
+    }
+
+    /** @test */
     public function it_can_sum_collection_items()
     {
         $arr = [1, 1, 2, 2, 3, 4, 2, 'asd']; //15
@@ -186,6 +194,19 @@ class CollectionTest extends CollectionTestCase
         $this->assertEquals( 'one,two,three,four' , $collection);
     }
 
+    /** @test */
+    public function it_can_check_if_value_is_inside_a_collection()
+    {
+        $result = $this->associateCollection->contains('Desk');
+        $result2 = $this->associateCollection->contains('Desk2');
+        $result3 = $this->associateCollection->contains(function ($item,$key){
+            return $key == 'price222';
+        });
+
+        $this->assertTrue($result);
+        $this->assertFalse($result2);
+        $this->assertFalse($result3);
+    }
 
 
 }

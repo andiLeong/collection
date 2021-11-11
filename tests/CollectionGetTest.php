@@ -11,6 +11,12 @@ class CollectionGetTest extends CollectionTestCase
     /** @test */
     public function it_can_grab_the_first_item()
     {
+
+        $first = $this->collection->first(fn($item , $key) => $key > 1);
+        $firstNull = $this->collection->first(fn($item , $key) => $key > 10000);
+
+        $this->assertNull($firstNull);
+        $this->assertEquals('three', $first);
         $this->assertEquals('one',$this->collection->first());
     }
 
