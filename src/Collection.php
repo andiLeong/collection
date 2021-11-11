@@ -27,7 +27,7 @@ class Collection extends BaseCollection
         return new static(array_map($fn,$this->items, array_keys($this->items ) ));
     }
 
-    public function filter(callable $fn , $mode = 0)
+    public function filter(callable $fn = null, $mode = ARRAY_FILTER_USE_BOTH)
     {
         return new static(array_filter($this->items,$fn,$mode));
     }
@@ -244,9 +244,14 @@ class Collection extends BaseCollection
         return $this;
     }
 
-    public function reduce(callable $callable)
+    public function reduce(callable $callable , mixed $initial = null)
     {
-        return array_reduce( $this->items, $callable);
+        return array_reduce( $this->items, $callable ,$initial);
+    }
+
+    public function implode(string $seperator)
+    {
+        return implode( $seperator, $this->items);
     }
 
     public function all()

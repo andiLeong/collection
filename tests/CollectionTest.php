@@ -13,6 +13,13 @@ class CollectionTest extends CollectionTestCase
 
 
     /** @test */
+    public function it_can_instantiate_collection_by_utilize_global_helpers()
+    {
+        $collection = collection([]);
+        $this->assertInstanceOf(Collection::class , $collection);
+    }
+
+    /** @test */
     public function it_gets_the_collection_count()
     {
         $this->assertCount(4,$this->collection);
@@ -46,10 +53,11 @@ class CollectionTest extends CollectionTestCase
     /** @test */
     public function it_can_be_filter()
     {
-        $newCollection = $this->collection->filter(
-            fn($value) => $value != 'one'
-        )->values();
+        $newCollection = $this->collection->filter(fn($value) => $value != 'one')->values();
+        $newCollection2 = $this->collection->filter(fn($value,$key) => $key > 2)->values();
+
         $this->assertEquals('two',$newCollection->first());
+        $this->assertEquals('four',$newCollection2->first());
     }
 
     /** @test */
@@ -163,6 +171,21 @@ class CollectionTest extends CollectionTestCase
         $this->assertEquals( 6 , $collection->count());
         $this->assertEquals( 'world' , $collection->last());
     }
+
+    /** @test */
+    public function it_can_reduce_a_collection_to_a_single_value()
+    {
+        $collection = $this->numberCollection->reduce(fn($carry,$item) => $carry += $item , 0);
+        $this->assertEquals( 15 , $collection);
+    }
+
+    /** @test */
+    public function it_can_implode_the_collection_to_a_string()
+    {
+        $collection = $this->collection->implode(',');
+        $this->assertEquals( 'one,two,three,four' , $collection);
+    }
+
 
 
 }

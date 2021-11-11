@@ -9,6 +9,9 @@
         "symfony/var-dumper": "^5.3"
     },
     "autoload": {
+        "files": [
+            "src/Helpers.php"
+        ],
         "psr-4": {
             "Andileong\\Collection\\": "src/",
             "Tests\\": "tests/"
