@@ -195,7 +195,7 @@ class CollectionTest extends CollectionTestCase
     }
 
     /** @test */
-    public function it_can_check_if_value_is_inside_a_collection()
+    public function it_can_check_if_a_collection_contains_a_value()
     {
         $result = $this->associateCollection->contains('Desk');
         $result2 = $this->associateCollection->contains('Desk2');
@@ -207,6 +207,23 @@ class CollectionTest extends CollectionTestCase
         $this->assertFalse($result2);
         $this->assertFalse($result3);
     }
+
+    /** @test */
+    public function it_can_transpose_the_collection()
+    {
+        $data = [
+            'name' => ['sherry','sally','sofia'],
+            'email' => ['sherry@example.com','sally@example.com','sofia@example.com'],
+            'salary' => ['1000','3000','10000']
+        ];
+        $lookup = ['sherry','sherry@example.com','1000'];
+
+        $collection = collection($data)->transpose();
+
+        $this->assertEquals($lookup,$collection->first());
+    }
+
+    //
 
 
 }

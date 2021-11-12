@@ -66,15 +66,22 @@ class CollectionGetTest extends CollectionTestCase
     }
 
     /** @test */
-    public function it_can_pluck_collection_items()
+    public function it_can_pluck_a_collection_item()
     {
         $arr2 = [
             ['name' => 'andi', 'saving' => 100],
             ['name' => 'liang', 'saving' => 200],
         ];
+        $optinons = ['index' => 'name', 'default' => 'default'];
+
         $newCollection = Collection::make($arr2)->pluck('saving');
+        $newCollection2 = Collection::make($arr2)->pluck('givemedefault', $optinons);
+        $newCollection3 = Collection::make($arr2)->pluck('saving', $optinons);
+
         $this->assertEquals( 100, $newCollection[0]);
         $this->assertEquals( 200, $newCollection[1]);
+        $this->assertEquals( 100, $newCollection3['andi']);
+        $this->assertEquals( 'default', $newCollection2);
     }
 
     /** @test */

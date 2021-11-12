@@ -52,7 +52,7 @@ class Collection extends BaseCollection
     }
 
 
-    public function value($value, ...$args)
+    private function value($value, ...$args)
     {
         return $value instanceof Closure ? $value(...$args) : $value;
     }
@@ -92,9 +92,9 @@ class Collection extends BaseCollection
      * @param array $item
      * @return $this
      */
-    public function shared(array $item)
+    public function shared(array $item, $default = null)
     {
-        return new static(array_intersect_assoc($this->items,$item));
+        return $this->getDefault(array_intersect_assoc($this->items,$item), $default);
     }
 
     /**
@@ -102,19 +102,19 @@ class Collection extends BaseCollection
      * @param array $item
      * @return $this
      */
-    public function sharedValues(array $item)
+    public function sharedValues(array $item, $default = null)
     {
-        return new static(array_intersect($this->items,$item));
+        return $this->getDefault(array_intersect($this->items,$item), $default);
     }
 
-    public function diffValues(array $item)
+    public function diffValues(array $item, $default = null)
     {
-        return new static(array_diff($this->items,$item));
+        return $this->getDefault(array_diff($this->items,$item), $default);
     }
 
-    public function diff(array $item)
+    public function diff(array $item, $default = null)
     {
-        return new static(array_diff_assoc($this->items,$item));
+        return $this->getDefault(array_diff_assoc($this->items,$item), $default);
     }
 
     public function random(int $length = 1)
@@ -186,9 +186,15 @@ class Collection extends BaseCollection
         return new static( array_slice($this->items , $offset , $length ) );
     }
 
-    public function pluck($key,$index = null)
+    public function pluck($key, array $optinons = [])
     {
-        return new static(array_column($this->items,$key,$index));
+        $result = array_column($this->items,$key, $optinons['index'] ?? null);
+        return $this->getDefault($result, $optinons['default'] ?? null);
+    }
+
+    private function getDefault($result,$default)
+    {
+        return count($result) > 0 ? new static($result) : $default;
     }
 
     public function isEmpty()
@@ -274,6 +280,12 @@ class Collection extends BaseCollection
     public function implode(string $seperator)
     {
         return implode( $seperator, $this->items);
+    }
+
+    public function transpose()
+    {
+        $items = array_map(fn(...$items) => $items, ...$this->values());
+        return new static($items);
     }
 
     public function all()
