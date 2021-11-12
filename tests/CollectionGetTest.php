@@ -14,10 +14,12 @@ class CollectionGetTest extends CollectionTestCase
 
         $first = $this->collection->first(fn($item , $key) => $key > 1);
         $firstNull = $this->collection->first(fn($item , $key) => $key > 10000);
+        $firstDefault = $this->collection->first(fn($item , $key) => $key > 10000,'default');
 
         $this->assertNull($firstNull);
         $this->assertEquals('three', $first);
         $this->assertEquals('one',$this->collection->first());
+        $this->assertEquals('default',$firstDefault);
     }
 
     /** @test */

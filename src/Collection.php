@@ -231,9 +231,10 @@ class Collection extends BaseCollection
 
     /**
      * @param callable|null $callback
+     * @param null $default
      * @return mixed|null
      */
-    public function first(callable $callback = null)
+    public function first(callable $callback = null , $default = null)
     {
         if(is_null($callback)){
             return array_shift($this->items);
@@ -244,7 +245,7 @@ class Collection extends BaseCollection
                 return $value;
             }
         }
-        return null;
+        return $default ? $default : null;
     }
 
     public function second()
