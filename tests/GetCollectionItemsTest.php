@@ -5,7 +5,7 @@ namespace Tests;
 use Andileong\Collection\Collection;
 use InvalidArgumentException;
 
-class CollectionGetTest extends CollectionTestCase
+class GetCollectionItemsTest extends CollectionTestCase
 {
 
     /** @test */

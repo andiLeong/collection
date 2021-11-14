@@ -2,7 +2,7 @@
 namespace Tests;
 
 
-class CollectionFormatTest extends CollectionTestCase
+class FormatCollectionTest extends CollectionTestCase
 {
     public function setUp() :void
     {

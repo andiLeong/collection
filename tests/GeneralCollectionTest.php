@@ -4,7 +4,7 @@ namespace Tests;
 use Andileong\Collection\Collection;
 use InvalidArgumentException;
 
-class CollectionTest extends CollectionTestCase
+class GeneralCollectionTest extends CollectionTestCase
 {
 
     public function setUp() :void
