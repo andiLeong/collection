@@ -223,6 +223,65 @@ class CollectionTest extends CollectionTestCase
         $this->assertEquals($lookup,$collection->first());
     }
 
+
+    /** @test */
+    public function it_throw_exception_if_key_by_key_not_found_from_the_collection()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->multiDimensionalCollection->keyBy('id22');
+    }
+
+    /** @test */
+    public function it_can_key_by_from_the_collection()
+    {
+       $collection = $this->multiDimensionalCollection->keyBy('id');
+        $this->assertEquals([99,100],$collection->keys()->all());
+    }
+
+    /** @test */
+    public function it_can_trigger_callback_if_collection_is_empty()
+    {
+        $collection = $this->numberCollection
+            ->filter(fn($item) => $item > 100)
+            ->ifEmpty(fn($items) => $items->push(100));
+
+        $this->assertEquals(100,$collection->first());
+    }
+
+    /** @test */
+    public function it_can_trigger_callback_if_collection_is_not_empty()
+    {
+        $collection = $this->numberCollection
+            ->filter(fn($item) => $item > 3)
+            ->ifEmpty(fn($items) => $items->push(100))
+            ->ifNotEmpty(fn($items) => $items->push(99));
+
+        $this->assertEquals(99,$collection->last());
+    }
+
+    /** @test */
+    public function it_can_zip_collection_with_an_array()
+    {
+
+        $first = ['Chair', 'Desk'];
+        $second = [100, 200];
+        $collection = collection($first)->zip($second);
+
+        $this->assertEquals(['Chair',100],$collection->first());
+        $this->assertEquals(['Desk',200],$collection->second());
+    }
+
+    /** @test */
+    public function it_can_use_when_method_to_conditionally_trigger_callback()
+    {
+        $collection = $this->numberCollection
+            ->when(true,fn($collection) => $collection->push(100))
+            ->when(false,fn($collection) => $collection->push(101));;
+
+        $this->assertEquals(100,$collection->last());
+        $this->assertNotEquals(101,$collection->last());
+    }
+
     //
 
 

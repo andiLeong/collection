@@ -42,6 +42,49 @@ class Collection extends BaseCollection
         return new static(array_keys($this->items ));
     }
 
+    public function keyBy($key)
+    {
+        $result = $this->reduce( function($carry,$item) use($key){
+            if(! array_key_exists($key,$item) ){
+                throw new InvalidArgumentException("Key {$key} isn't exist");
+            }
+            $carry[$item[$key]] = $item;
+            return $carry;
+        }, []);
+
+        return new static($result);
+    }
+
+    public function zip(array $array)
+    {
+        $result = $this->map(fn($item, $key) => [$item,$array[$key]])->all();
+        return new static($result);
+    }
+
+    public function when(bool $boolean,callable $callback)
+    {
+        if($boolean){
+            return $callback($this);
+        }
+        return $this;
+    }
+
+    public function ifEmpty(callable $callback)
+    {
+        if($this->isEmpty()){
+            $callback($this);
+        }
+        return $this;
+    }
+
+    public function ifNotEmpty(callable $callback)
+    {
+        if($this->isNotEmpty()){
+            $callback($this);
+        }
+        return $this;
+    }
+
     public function get(string $key , $default = null )
     {
         if($this->has($key)){
@@ -186,10 +229,9 @@ class Collection extends BaseCollection
         return new static( array_slice($this->items , $offset , $length ) );
     }
 
-    public function pluck($key, array $optinons = [])
+    public function pluck($key, $index = null)
     {
-        $result = array_column($this->items,$key, $optinons['index'] ?? null);
-        return $this->getDefault($result, $optinons['default'] ?? null);
+        return new static(array_column($this->items,$key, $index));
     }
 
     private function getDefault($result,$default)
@@ -243,7 +285,9 @@ class Collection extends BaseCollection
     public function first(callable $callback = null , $default = null)
     {
         if(is_null($callback)){
-            return array_shift($this->items);
+            foreach ($this->items as $item) {
+                return $item;
+            }
         }
 
         foreach ($this->items as $index => $value){
@@ -261,7 +305,7 @@ class Collection extends BaseCollection
 
     public function last()
     {
-        return array_pop($this->items);
+        return end($this->items);
     }
 
     public function push(...$values)

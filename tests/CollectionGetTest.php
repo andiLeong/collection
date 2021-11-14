@@ -72,16 +72,11 @@ class CollectionGetTest extends CollectionTestCase
             ['name' => 'andi', 'saving' => 100],
             ['name' => 'liang', 'saving' => 200],
         ];
-        $optinons = ['index' => 'name', 'default' => 'default'];
 
         $newCollection = Collection::make($arr2)->pluck('saving');
-        $newCollection2 = Collection::make($arr2)->pluck('givemedefault', $optinons);
-        $newCollection3 = Collection::make($arr2)->pluck('saving', $optinons);
 
         $this->assertEquals( 100, $newCollection[0]);
         $this->assertEquals( 200, $newCollection[1]);
-        $this->assertEquals( 100, $newCollection3['andi']);
-        $this->assertEquals( 'default', $newCollection2);
     }
 
     /** @test */

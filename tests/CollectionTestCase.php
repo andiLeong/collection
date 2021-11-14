@@ -10,9 +10,11 @@ abstract class CollectionTestCase extends testcase
     public array $array;
     public array $associateArray;
     public array $numberArray;
+    public array $multiDimensionalArray;
     public $collection;
     public $associateCollection;
     public Collection $numberCollection;
+    public Collection $multiDimensionalCollection;
 
     public function setUp() :void
     {
@@ -28,10 +30,24 @@ abstract class CollectionTestCase extends testcase
             'discount' => false,
         ];
 
+        $this->multiDimensionalArray  = [
+            [
+                'name' => 'judy',
+                'email' => 'judy@email.com',
+                'id' => 99,
+            ],
+            [
+                'name' => 'ronald',
+                'email' => 'ronald@email.com',
+                'id' => 100,
+            ],
+        ];
+
 
         $this->collection = Collection::make($this->array);
         $this->associateCollection = Collection::make($this->associateArray);
         $this->numberCollection = collection($this->numberArray);
+        $this->multiDimensionalCollection = collection($this->multiDimensionalArray);
 
     }
 
