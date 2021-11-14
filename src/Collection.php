@@ -8,6 +8,7 @@ use ReflectionFunction;
 
 class Collection extends BaseCollection
 {
+    use Aggregatable;
 
     /**
      * AndiCollection constructor.
@@ -110,18 +111,10 @@ class Collection extends BaseCollection
         return new static($this->items);
     }
 
-    public function sum($key = null)
+    public function unshift(mixed ...$values)
     {
-        return is_null($key)
-            ? array_sum($this->items)
-            : array_sum(
-                $this->pluck($key)->all()
-            );
-    }
-
-    public function average($key = null)
-    {
-        return  round($this->sum($key) / $this->count() , 0);
+        array_unshift($this->items,implode($values) );
+        return new static($this->items);
     }
 
     public function only(array|string $keys)

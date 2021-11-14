@@ -120,39 +120,6 @@ class CollectionTest extends CollectionTestCase
     }
 
     /** @test */
-    public function it_can_sum_collection_items()
-    {
-        $arr = [1, 1, 2, 2, 3, 4, 2, 'asd']; //15
-        $res = Collection::make($arr)->sum();
-
-        $arr2 = [
-            ['name' => 'andi', 'saving' => 100],
-            ['name' => 'liang', 'saving' => 200],
-        ];
-
-        $res2 = Collection::make($arr2)->sum('saving');
-
-        $this->assertEquals( 15, $res);
-        $this->assertEquals( 300, $res2);
-    }
-
-    /** @test */
-    public function it_can_get_average_collection_items()
-    {
-        $arr = [1, 1, 2, 2, 3, 4, 2, 'asd']; //15
-        $res = Collection::make($arr)->average();
-
-        $arr2 = [
-            ['name' => 'andi', 'saving' => 100],
-            ['name' => 'liang', 'saving' => 200],
-        ];
-        $res2 = Collection::make($arr2)->average('saving');
-
-        $this->assertEquals( 2, $res);
-        $this->assertEquals( 150, $res2);
-    }
-
-    /** @test */
     public function it_can_flatten_the_collection_items()
     {
 
