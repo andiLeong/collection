@@ -249,6 +249,39 @@ class GeneralCollectionTest extends CollectionTestCase
         $this->assertNotEquals(101,$collection->last());
     }
 
+
+    /** @test */
+    public function it_can_get_eachcons_from_collection()
+    {
+        $arr = [1,2,3,4,5,6,7];
+        $length = 3;
+        $collection = collection($arr)->eachCons($length)->toArray();
+        $collection2 = collection($arr)->eachCons(2)->toArray();
+
+        $expected = [
+            [1,2,3],
+            [2,3,4],
+            [3,4,5],
+            [4,5,6],
+            [5,6,7],
+        ];
+
+        $expected2 = [
+            [1,2],
+            [2,3],
+            [3,4],
+            [4,5],
+            [5,6],
+            [6,7],
+        ];
+
+
+        $this->assertEquals($expected,$collection);
+        $this->assertEquals($expected2,$collection2);
+        foreach ($collection as $index => $value){
+            $this->assertEquals($length,count($value));
+        }
+    }
     //
 
 

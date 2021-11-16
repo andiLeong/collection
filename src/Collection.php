@@ -46,7 +46,7 @@ class Collection extends BaseCollection
     public function keyBy($key)
     {
         $result = $this->reduce( function($carry,$item) use($key){
-            if(! array_key_exists($key,$item) ){
+            if(! $this->keyExists($item, $key)){
                 throw new InvalidArgumentException("Key {$key} isn't exist");
             }
             $carry[$item[$key]] = $item;
@@ -58,8 +58,20 @@ class Collection extends BaseCollection
 
     public function zip(array $array)
     {
-        $result = $this->map(fn($item, $key) => [$item,$array[$key]])->all();
-        return new static($result);
+        return $this->map(fn($item, $key) => [$item, $this->keyExists($array, $key) ? $array[$key] : null]);
+    }
+
+    private function keyExists(array $array, string|int $key)
+    {
+        return array_key_exists($key,$array);
+    }
+
+    public function eachCons(int $length)
+    {
+        return $this->map(
+                    fn($item,$key) => [$item] +  array_slice($this->items , $key , $length)
+                )->filter( fn($item) => count($item) == $length)
+                ->values();
     }
 
     public function when(bool $boolean,callable $callback)
@@ -244,7 +256,7 @@ class Collection extends BaseCollection
 
     public function exist($key)
     {
-        return array_key_exists($key,$this->items);
+        return $this->keyExists(array:$this->items, key: $key);
     }
 
     public function has($key)
