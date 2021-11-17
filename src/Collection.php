@@ -262,6 +262,12 @@ class Collection extends BaseCollection
         return $this->slice(-$amount, $amount);
     }
 
+    public function prepend(...$value)
+    {
+        array_unshift($this->items, ...$value);
+        return $this;
+    }
+
     public function isEmpty()
     {
         return sizeof($this->items) == 0;
@@ -347,6 +353,19 @@ class Collection extends BaseCollection
     public function implode(string $seperator)
     {
         return implode( $seperator, $this->items);
+    }
+
+    public static function explode(string $separator , string $string)
+    {
+        return new static(explode($separator,$string));
+    }
+
+    public function each(callable $callback)
+    {
+        foreach ($this->items as $key => $item) {
+            $callback($item, $key);
+        }
+        return $this;
     }
 
     public function transpose()

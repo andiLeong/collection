@@ -279,6 +279,33 @@ class GeneralCollectionTest extends CollectionTestCase
     }
 
     /** @test */
+    public function it_can_prepend_items_to_the_collection()
+    {
+        $collection = $this->collection->prepend('zero','-1');
+        $this->assertEquals('zero',$collection->first());
+    }
+
+    /** @test */
+    public function it_can_explode_to_a_collection()
+    {
+        $string = "hello,gorgeous,are,you,free,tonight";
+        $collection = Collection::explode(',',$string);
+
+        $this->assertInstanceOf(Collection::class,$collection);
+        $this->assertEquals('hello',$collection->first());
+    }
+
+    /** @test */
+    public function it_can_use_each_loop_from_a_collection()
+    {
+        $temp = 0;
+        $this->numberCollection->each( function($item, $key) use(&$temp){
+             $temp += $item;
+        });
+        $this->assertEquals(15,$temp);
+    }
+
+    /** @test */
     public function it_can_get_eachcons_from_collection()
     {
         $arr = [1,2,3,4,5,6,7];
