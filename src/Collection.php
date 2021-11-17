@@ -244,6 +244,24 @@ class Collection extends BaseCollection
         return count($result) > 0 ? new static($result) : $default;
     }
 
+    public static function parse(string ...$values)
+    {
+        return new static($values);
+    }
+
+    public function pop($amount = 1)
+    {
+        if($amount == 1){
+            return array_pop($this->items);
+        }
+
+        if($this->count() < $amount){
+            throw new InvalidArgumentException("The Items you are trying to pop is bigger than the collection count!");
+        }
+
+        return $this->slice(-$amount, $amount);
+    }
+
     public function isEmpty()
     {
         return sizeof($this->items) == 0;

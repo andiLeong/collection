@@ -251,6 +251,34 @@ class GeneralCollectionTest extends CollectionTestCase
 
 
     /** @test */
+    public function it_can_parse_values_to_a_collection_instance()
+    {
+        $collection = Collection::parse('one','two');
+        $this->assertInstanceOf(Collection::class,$collection);
+    }
+
+    /** @test */
+    public function it_can_pop_items_from_the_end_of_collection()
+    {
+        $emptyCollection = collection([])->pop();
+        $collection = $this->numberCollection;
+        $pop = $collection->pop();
+        $lastTwo = $this->collection->pop(2);
+
+        $this->assertEquals(5,$pop);
+        $this->assertEquals([1,2,3,4],$collection->toArray());
+        $this->assertEquals(0,$emptyCollection);
+        $this->assertEquals(['three','four'],$lastTwo->toArray());
+    }
+
+    /** @test */
+    public function it_throw_exception_if_try_to_pop_items_amount_bigger_than_collection_count()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->collection->pop(2000);
+    }
+
+    /** @test */
     public function it_can_get_eachcons_from_collection()
     {
         $arr = [1,2,3,4,5,6,7];
@@ -282,7 +310,7 @@ class GeneralCollectionTest extends CollectionTestCase
             $this->assertEquals($length,count($value));
         }
     }
-    //
+    // prepend => unshift , pop => array_pop
 
 
 }
