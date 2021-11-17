@@ -162,7 +162,7 @@ class Collection extends BaseCollection
 
     public function diff(array $item, $default = null)
     {
-        return $this->getDefault(array_diff_assoc($this->items,$item), $default);
+        return $this->getDefault($this->arrayDiffAssoc($this->items,$item), $default);
     }
 
     public function random(int $length = 1)
@@ -266,6 +266,21 @@ class Collection extends BaseCollection
     {
         array_unshift($this->items, ...$value);
         return $this;
+    }
+
+    public function duplicates($key = null)
+    {
+        if(!$key){
+            return $this->diff(array_unique($this->items))->values();
+        }
+
+        $res = $this->arrayDiffAssoc(array_column($this->items,$key),array_unique(array_column($this->items,$key)));
+        return self::make($res)->values();
+    }
+
+    protected function arrayDiffAssoc(array $array,array $array2)
+    {
+        return array_diff_assoc($array, $array2);
     }
 
     public function isEmpty()

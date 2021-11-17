@@ -306,6 +306,21 @@ class GeneralCollectionTest extends CollectionTestCase
     }
 
     /** @test */
+    public function it_can_get_the_duplicate_values_from_a_collection()
+    {
+        $duplication = collection(['a', 'b', 'a', 'c', 'b','d','c','dd'])->duplicates()->toArray();
+        $duplication2 = collection([
+            ['email' => 'abigail@example.com', 'position' => 'Developer'],
+            ['email' => 'james@example.com', 'position' => 'Designer'],
+            ['email' => 'victoria@example.com', 'position' => 'Developer'],
+        ])->duplicates('position')->toArray();
+
+        $this->assertEquals(['a', 'b','c'],$duplication);
+        $this->assertEquals(['Developer'],$duplication2);
+
+    }
+
+    /** @test */
     public function it_can_get_eachcons_from_collection()
     {
         $arr = [1,2,3,4,5,6,7];
