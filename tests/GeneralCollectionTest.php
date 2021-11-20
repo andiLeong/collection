@@ -306,6 +306,23 @@ class GeneralCollectionTest extends CollectionTestCase
     }
 
     /** @test */
+    public function it_can_check_if_collection_contains_duplicates_values()
+    {
+        $duplication = collection(['a', 'b', 'a', 'c', 'b'])->hasDuplicates();
+        $duplication2 = collection(['a', 'b'])->hasDuplicates();
+//        $duplication2 = collection([
+//            ['email' => 'abigail@example.com', 'position' => 'Developer'],
+//            ['email' => 'james@example.com', 'position' => 'Designer'],
+//            ['email' => 'victoria@example.com', 'position' => 'Developer'],
+//        ])->duplicates('position')->toArray();
+
+        $this->assertTrue($duplication);
+        $this->assertFalse($duplication2);
+
+
+    }
+
+    /** @test */
     public function it_can_get_the_duplicate_values_from_a_collection()
     {
         $duplication = collection(['a', 'b', 'a', 'c', 'b','d','c','dd'])->duplicates()->toArray();

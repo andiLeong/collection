@@ -268,6 +268,12 @@ class Collection extends BaseCollection
         return $this;
     }
 
+    public function hasDuplicates()
+    {
+        $unique = array_unique( $this->items  );
+        return count($unique) !== $this->count();
+    }
+
     public function duplicates($key = null)
     {
         if(!$key){
