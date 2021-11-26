@@ -28,4 +28,10 @@ trait Aggregatable
     {
         return max($this->items);
     }
+
+    public function multiply()
+    {
+        return $this->reduce(fn($carry , $item) => $carry *= $item , 1);
+    }
+
 }
