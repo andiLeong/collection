@@ -40,7 +40,7 @@ abstract class BaseCollection implements Countable , ArrayAccess , IteratorAggre
 
     public function offsetExists($offset)
     {
-        return isset($this->items);
+        return isset($this->items[$offset]);
     }
 
     public function offsetSet($offset, $value)

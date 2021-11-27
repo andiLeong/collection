@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class CollectionTestCase extends testcase
 {
+    public string $default;
     public array $array;
     public array $associateArray;
     public array $numberArray;
@@ -42,6 +43,8 @@ abstract class CollectionTestCase extends testcase
                 'id' => 100,
             ],
         ];
+
+        $this->default = 'default';
 
 
         $this->collection = Collection::make($this->array);
