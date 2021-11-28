@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Tests;
+namespace Tests\collection;
 
 
 use Andileong\Collection\Collection;
@@ -57,5 +56,26 @@ class AggregateCollectionTest extends CollectionTestCase
     {
         $collection = $this->numberCollection->push(1000)->max();
         $this->assertEquals(1000, $collection);
+    }
+
+    /** @test */
+    public function it_can_get_the_multiply_values_from_a_collection()
+    {
+        $multiplied = $this->numberCollection->multiply();
+        $this->assertEquals(120,$multiplied);
+    }
+
+    /** @test */
+    public function it_can_get_double_value_from_the_collection()
+    {
+        $doubled = $this->numberCollection->double();
+        $this->assertEquals([2,4,6,8,10],$doubled->all());
+    }
+
+    /** @test */
+    public function it_can_get_triple_value_from_the_collection()
+    {
+        $doubled = $this->numberCollection->triple();
+        $this->assertEquals([3,6,9,12,15],$doubled->all());
     }
 }

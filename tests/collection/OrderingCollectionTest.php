@@ -1,10 +1,10 @@
 <?php
-namespace Tests;
+namespace Tests\collection;
 
 
 use Andileong\Collection\Collection;
 
-class CollectionOrderTest extends CollectionTestCase
+class OrderingCollectionTest extends CollectionTestCase
 {
 
     public function setUp() :void

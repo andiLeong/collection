@@ -46,10 +46,11 @@ class Collection extends BaseCollection
     public function keyBy($key)
     {
         $result = $this->reduce( function($carry,$item) use($key){
-            if(! $this->keyExists($item, $key)){
-                throw new InvalidArgumentException("Key {$key} isn't exist");
-            }
-            $carry[$item[$key]] = $item;
+
+            $value = collection($item)->get($key, fn($key) =>
+                throw new InvalidArgumentException("Key {$key} isn't exist")
+            );
+            $carry[$value] = $item;
             return $carry;
         }, []);
 
@@ -58,12 +59,7 @@ class Collection extends BaseCollection
 
     public function zip(array $array)
     {
-        return $this->map(fn($item, $key) => [$item, $this->keyExists($array, $key) ? $array[$key] : null]);
-    }
-
-    private function keyExists(array $array, string|int $key)
-    {
-        return array_key_exists($key,$array);
+        return $this->map(fn($item, $key) => [$item, collection($array)->get($key) ]);
     }
 
     public function eachCons(int $length)
@@ -104,7 +100,7 @@ class Collection extends BaseCollection
             return $this->items[$key];
         }
 
-        return $this->value($default);
+        return $this->value($default,$key);
     }
 
 
@@ -301,7 +297,7 @@ class Collection extends BaseCollection
 
     public function exist($key)
     {
-        return $this->keyExists(array:$this->items, key: $key);
+        return Arr::exists($this->items,$key);
     }
 
     public function has($key)
@@ -334,18 +330,7 @@ class Collection extends BaseCollection
      */
     public function first(callable $callback = null , $default = null)
     {
-        if(is_null($callback)){
-            foreach ($this->items as $item) {
-                return $item;
-            }
-        }
-
-        foreach ($this->items as $index => $value){
-            if ($callback($value, $index)) {
-                return $value;
-            }
-        }
-        return $default ? $default : null;
+        return Arr::first($this->items,$callback,$default);
     }
 
     public function second()

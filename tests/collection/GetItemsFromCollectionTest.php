@@ -1,11 +1,11 @@
 <?php
-namespace Tests;
+namespace Tests\collection;
 
 
 use Andileong\Collection\Collection;
 use InvalidArgumentException;
 
-class GetCollectionItemsTest extends CollectionTestCase
+class GetItemsFromCollectionTest extends CollectionTestCase
 {
 
     /** @test */

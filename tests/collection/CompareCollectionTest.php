@@ -1,5 +1,5 @@
 <?php
-namespace Tests;
+namespace Tests\collection;
 
 class CompareCollectionTest extends CollectionTestCase
 {

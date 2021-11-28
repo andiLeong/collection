@@ -1,5 +1,5 @@
 <?php
-namespace tests;
+namespace Tests\playground;
 
 use Andileong\Collection\Collection;
 use PHPUnit\Framework\TestCase;

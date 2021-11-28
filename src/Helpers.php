@@ -1,5 +1,6 @@
 <?php
 
+use Andileong\Collection\Arr;
 use Andileong\Collection\Collection;
 
 if (!function_exists('collection')) {
@@ -10,28 +11,18 @@ if (!function_exists('collection')) {
     }
 }
 
-if (!function_exists('arr_get')) {
+if (!function_exists('array_get')) {
 
-    function arr_get(iterable|ArrayAccess $array,$key,$default = null)
+    function array_get(iterable|ArrayAccess $array,$key,$default = null)
     {
+        return Arr::get($array,$key,$default);
+    }
+}
 
-        if( isset($array[$key])  ){
-            return $array[$key];
-        }
+if (!function_exists('array_first')) {
 
-        if(!str_contains($key,'.')){
-            return $default;
-        }
-
-        return array_reduce(explode('.',$key),function($carry,$item) use($default){
-            if ( isset($carry[$item])) {
-                $carry = $carry[$item];
-                return $carry;
-
-            } else {
-                return $default;
-            }
-        },$array);
-
+    function array_first(iterable $array,callable $callback,$default = null)
+    {
+        return Arr::first($array,$callback,$default);
     }
 }

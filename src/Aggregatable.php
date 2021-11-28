@@ -34,4 +34,14 @@ trait Aggregatable
         return $this->reduce(fn($carry , $item) => $carry *= $item , 1);
     }
 
+    public function double()
+    {
+        return new static(Arr::multiples($this->items,2));
+    }
+
+    public function triple()
+    {
+        return new static(Arr::multiples($this->items,3));
+    }
+
 }

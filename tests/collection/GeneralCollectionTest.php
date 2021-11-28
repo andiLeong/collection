@@ -1,5 +1,5 @@
 <?php
-namespace Tests;
+namespace Tests\collection;
 
 use Andileong\Collection\Collection;
 use InvalidArgumentException;
@@ -368,13 +368,6 @@ class GeneralCollectionTest extends CollectionTestCase
         foreach ($collection as $index => $value){
             $this->assertEquals($length,count($value));
         }
-    }
-
-    /** @test */
-    public function it_can_get_the_multiply_values_from_a_collection()
-    {
-        $multiplied = $this->numberCollection->multiply();
-        $this->assertEquals(120,$multiplied);
     }
 
     // prepend => unshift , pop => array_pop

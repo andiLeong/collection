@@ -1,5 +1,5 @@
 <?php
-namespace Tests;
+namespace Tests\collection;
 
 
 use Andileong\Collection\Collection;
