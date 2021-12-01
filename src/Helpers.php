@@ -2,6 +2,7 @@
 
 use Andileong\Collection\Arr;
 use Andileong\Collection\Collection;
+use Andileong\Collection\Container;
 
 if (!function_exists('collection')) {
 
@@ -24,5 +25,14 @@ if (!function_exists('array_first')) {
     function array_first(iterable $array,callable $callback,$default = null)
     {
         return Arr::first($array,$callback,$default);
+    }
+}
+
+if (!function_exists('tap')) {
+
+    function tap($value,callable $callback)
+    {
+        $callback($value);
+        return $value;
     }
 }

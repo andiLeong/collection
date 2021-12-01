@@ -50,10 +50,8 @@ class Arr
             if ( isset($carry[$item])) {
                 $carry = $carry[$item];
                 return $carry;
-
-            } else {
-                return $default;
             }
+            return $default;
         },$array);
 
     }
