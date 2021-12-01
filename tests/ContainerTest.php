@@ -6,6 +6,7 @@ namespace Tests;
 use Andileong\Collection\Container;
 use PHPUnit\Framework\TestCase;
 use Tests\mock\ExampleStub;
+use Tests\mock\TapMock;
 
 class ContainerTest extends testcase
 {

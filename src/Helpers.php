@@ -2,7 +2,7 @@
 
 use Andileong\Collection\Arr;
 use Andileong\Collection\Collection;
-use Andileong\Collection\Container;
+use Andileong\Collection\TapProxy;
 
 if (!function_exists('collection')) {
 
@@ -30,8 +30,11 @@ if (!function_exists('array_first')) {
 
 if (!function_exists('tap')) {
 
-    function tap($value,callable $callback)
+    function tap($value,callable $callback = null)
     {
+        if(is_null($callback)){
+            return new TapProxy($value);
+        }
         $callback($value);
         return $value;
     }
