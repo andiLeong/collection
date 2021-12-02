@@ -39,3 +39,14 @@ if (!function_exists('tap')) {
         return $value;
     }
 }
+
+if (!function_exists('config_path')) {
+
+    function config_path()
+    {
+        return realpath(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' );
+    }
+}
+
+
+
