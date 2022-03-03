@@ -83,22 +83,22 @@ class Container implements ArrayAccess
         return $reflector->newInstanceArgs($dependencies);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset) :bool
     {
         return isset($this->binding[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset) :mixed
     {
         return $this->binding[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) :void
     {
-        return $this->binding[$offset] = $value;
+        $this->binding[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) :void
     {
         unset($this->binding[$offset]);
     }

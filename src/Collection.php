@@ -385,7 +385,7 @@ class Collection extends BaseCollection
         return $this->items;
     }
 
-    public function count()
+    public function count() :int
     {
         return count($this->items);
     }
